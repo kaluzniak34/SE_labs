@@ -1,3 +1,5 @@
+from enum import Enum
+
 # Simple Task class definition
 class Task:
 	def __init__(self, name, trigger, members):
@@ -7,3 +9,9 @@ class Task:
 
 	def __repr__(self):
 		return f"Task(name={self.name!r}, trigger={self.trigger!r}, members={self.members!r})"
+
+
+class Role(str, Enum):
+    ADMIN = "admin"
+    USER = "user"
+
