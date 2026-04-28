@@ -1,0 +1,8 @@
+<h2>1. ATM Withdrawal Sequence Diagram</h2><br>
+This diagram illustrates the chronological, step-by-step interaction between a User, an ATM, a BankServer, and a BankAccount during a transaction. It maps out the path of a user inserting their card, entering their PIN, requesting an amount, and successfully receiving dispensed cash. It effectively uses "alt" (alternative) frames to define how the system handles errors, such as ejecting the card if it is invalid or the PIN is wrong, and rejecting the transaction if there are insufficient funds in the account.  
+
+<h2>2. Patient State Machine Diagram</h2><br>
+This diagram maps the lifecycle and changing statuses of a Patient within a medical system's database. A user begins in an "Inactive" state (not in the database). Once they register, their state changes to "Registered". When they make an appointment, they transition to a "Scheduled" state. After they complete the appointment, they are marked as "Visited" , before eventually cycling back to the "Registered" state once they are deemed healthy.
+
+<h2>3. Car Insurance Renewal Activity Diagram</h2><br>
+This diagram outlines the logical workflow and decision paths triggered when a car insurance policy is about to expire. It uses diamond nodes to check prerequisites: first, determining if the user is registered (if not, they must register the car; if yes, they ask for prolongation). It then verifies if the system can actually insure the car. If approved, the user signs a document and selects a payment method. The flow then splits into two parallel options—paying by card (which includes an extra step to enter a PIN) or paying with cash—before converging again to issue the final invoice.
