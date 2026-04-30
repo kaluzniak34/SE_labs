@@ -1,7 +1,7 @@
 import unittest
 from datetime import datetime, timedelta
 
-from Project.Code.test import TaskManager
+from Project.Code.test import TaskManager, validate_time
 from test import Task
 
 class TestTask(unittest.TestCase):
@@ -26,6 +26,9 @@ class TestTask(unittest.TestCase):
         task.complete()
         self.assertTrue(task.completed)
 
+    def test_date_validity(self):
+
+
 class TestTaskManager(unittest.TestCase):
 
     def test_init_manager(self):
@@ -38,6 +41,24 @@ class TestTaskManager(unittest.TestCase):
         manager = TaskManager(tasks=[])
         manager.add_task(Task("sample name", "2024-06-01 10:00:00", "calc"))
         self.assertEqual(len(manager.tasks), 1)
+
+class TestTime(unittest.TestCase):
+    def test_invalid_format(self):
+        task = Task("sample name", "10:00.00 01/06/24", "")
+        self.assertTrue(validate_time(task))
+
+    def test_invalid_date(self):
+        task = Task("sample name", "2024-13-58 10:00:00", "")
+        self.assertTrue(validate_time(task))
+
+    def test_invalid_hour(self):
+        task = Task("sample name", "2024-10-10 40:00:00", "")
+        self.assertTrue(validate_time(task))
+
+    def test_non_date_string(self):
+        task = Task("sample name", "agodfsdgfkhj9", "")
+        self.assertTrue(validate_time(task))
+
 
 if __name__ == "__main__":
     unittest.main()

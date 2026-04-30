@@ -2,6 +2,9 @@ from enum import Enum
 from datetime import datetime
 import os
 
+def validate_time(task):
+	raise NameError
+
 class Task:
 	def __init__(self, name, time, executable):
 		self.name = name
