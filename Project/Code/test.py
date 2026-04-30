@@ -3,7 +3,7 @@ from datetime import datetime
 import os
 
 def validate_time(task):
-	raise NameError
+	return datetime.strptime(task.time, "%Y-%m-%d %H:%M:%S")
 
 class Task:
 	def __init__(self, name, time, executable):
