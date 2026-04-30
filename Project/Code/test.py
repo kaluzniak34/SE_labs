@@ -2,8 +2,8 @@ from enum import Enum
 from datetime import datetime
 import os
 
-def validate_time(task):
-	return datetime.strptime(task.time, "%Y-%m-%d %H:%M:%S")
+def validate_time(time):
+	return datetime.strptime(time, "%Y-%m-%d %H:%M:%S")
 
 class Task:
 	def __init__(self, name, time, executable):
