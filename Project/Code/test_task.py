@@ -20,6 +20,11 @@ class TestTask(unittest.TestCase):
         self.assertTrue(task.is_due())
         self.assertFalse(task.completed)
 
+    def test_is_completed(self):
+        task = Task("sample name", "2024-06-01 10:00:00", "calc")
+        task.complete()
+        self.assertTrue(task.completed)
+
 
 
 if __name__ == "__main__":

@@ -14,3 +14,6 @@ class Task:
 	def is_due(self):
 		now = datetime.now()
 		return now >= self.time
+
+	def complete(self):
+		raise NameError
