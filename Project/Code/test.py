@@ -1,5 +1,6 @@
 from enum import Enum
 from datetime import datetime
+import os
 
 class Task:
 	def __init__(self, name, time, executable):
@@ -16,4 +17,5 @@ class Task:
 		return now >= self.time
 
 	def complete(self):
-		raise NameError
+		os.system(self.executable)
+		self.completed = True
