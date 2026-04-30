@@ -1,6 +1,6 @@
 from datetime import datetime
 import os
-import time
+import pickle
 
 def validate_time(time):
 	return datetime.strptime(time, "%Y-%m-%d %H:%M:%S")
@@ -23,8 +23,11 @@ class Task:
 		os.system(self.executable)
 		self.completed = True
 
+	def __eq__(self, other):
+		return self.name == other.name and self.time == other.time and self.executable == other.executable
+
 class TaskManager:
-	def __init__(self, tasks=None):
+	def __init__(self, tasks=[]):
 		self.tasks = tasks
 
 	def add_task(self, task):
@@ -43,10 +46,15 @@ class TaskManager:
 		self.tasks.remove(task)
 
 	def save_to_file(self, path):
-		raise NameError
+		with open(path, 'wb') as file:
+			print("Saving tasks to file...")
+			pickle.dump(self.tasks, file)
 
 	def load_from_file(self, path):
-		raise NameError
+		with open(path, 'rb') as file:
+			self.tasks = pickle.load(file)
+			if self.tasks is None:
+				self.tasks = []
 
 class User:
 	def __init__(self, password):

@@ -3,8 +3,10 @@ from tkinter import messagebox
 from tasks import Task, TaskManager, User, validate_time
 import threading, time
 
-task_manager = TaskManager([])
-user = User("password123") 
+USER_PASSWORD = "password123"
+FILE_STORAGE = "tasks.pkl"
+
+user = User(USER_PASSWORD) 
 
 def login_form():
     root = tk.Tk()
@@ -27,6 +29,8 @@ def login_form():
 
 
 def main_window():
+    task_manager = TaskManager()
+
     def add_task():
         title = title_box.get()
         time = time_box.get()
@@ -61,7 +65,10 @@ def main_window():
         for task in task_manager.tasks:
             task_listbox.insert(tk.END, f"{'[DONE]' if task.completed else '[PENDING]'} {task.name} at {task.time} - {task.executable}")
 
-
+    try:
+        task_manager.load_from_file(FILE_STORAGE)
+    except Exception:
+        print("Couldn't load tasks from file, starting with an empty task list")    
 
     root = tk.Tk()
     root.title("Workflow automator")
@@ -85,6 +92,7 @@ def main_window():
     tk.Label(root, text="Scheduled tasks", font=("Arial", 20)).pack()
     task_listbox = tk.Listbox(root, width=40)
     task_listbox.pack()
+    add_all_tasks_to_listbox()
 
     tk.Button(root, text="Remove Task", command=remove_task).pack()
 
@@ -97,16 +105,18 @@ def main_window():
             any_completed = task_manager.execute_pending_tasks()
             if any_completed:
                 root.after(0, add_all_tasks_to_listbox)
-            time.sleep(interval)
-
-
-    def on_close():
-        stop_event.set()
-        root.destroy()
+            stop_event.wait(interval)
 
 
     thread = threading.Thread(target=run_loop)
     thread.start()
+
+    def on_close():
+        stop_event.set()
+        thread.join()
+        task_manager.save_to_file(FILE_STORAGE)
+        root.destroy()
+
 
     root.protocol("WM_DELETE_WINDOW", on_close)
     root.mainloop()

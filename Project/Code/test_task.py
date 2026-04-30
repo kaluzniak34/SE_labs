@@ -93,7 +93,7 @@ class TestTaskManager(unittest.TestCase):
     def test_load_from_directory(self):
         manager = TaskManager()
         file = "."
-        self.assertRaises(IsADirectoryError, manager.load_from_file, file)
+        self.assertRaises(PermissionError, manager.load_from_file, file)
 
 
 
