@@ -41,3 +41,10 @@ class TaskManager:
 
 	def remove_task(self, task):
 		self.tasks.remove(task)
+
+class User:
+	def __init__(self, password):
+		self.password = password
+
+	def check_password(self, password):
+		raise NameError

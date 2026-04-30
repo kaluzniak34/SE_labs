@@ -1,7 +1,8 @@
 import unittest
 from datetime import datetime, timedelta
 
-from tasks import Task, TaskManager, validate_time
+from tasks import Task, TaskManager, validate_time, User
+
 
 class TestTask(unittest.TestCase):
     def test_task_initialization(self):
@@ -78,6 +79,16 @@ class TestTime(unittest.TestCase):
     def test_correct_date(self):
         time = "2024-06-01 10:00:00"
         self.assertEqual(validate_time(time), datetime(2024, 6, 1, 10, 0, 0))
+
+class TestUser(unittest.TestCase):
+    def test_correct_password(self):
+        user = User("passwd123")
+        self.assertTrue(user.check_password("passwd123"))
+
+    def test_incorrect_password(self):
+        user = User("passwd123")
+        self.assertFalse(user.check_password("nope"))
+
 
 if __name__ == "__main__":
     unittest.main()
