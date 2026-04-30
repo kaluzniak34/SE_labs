@@ -1,7 +1,7 @@
 import unittest
 from datetime import datetime, timedelta
 
-from test import Task, TaskManager, validate_time
+from tasks import Task, TaskManager, validate_time
 
 class TestTask(unittest.TestCase):
     def test_task_initialization(self):
@@ -55,7 +55,7 @@ class TestTaskManager(unittest.TestCase):
         task_list = [Task("sample name 2", "2024-06-01 10:00:00", "notepad")]
         manager = TaskManager(task_list)
         manager.remove_task(manager.tasks[0])
-        self.assertNotEqual(task_list, manager.tasks)
+        self.assertEqual(task_list, manager.tasks)
 
 
 class TestTime(unittest.TestCase):

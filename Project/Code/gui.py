@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
-from test import Task, TaskManager, validate_time
-import asyncio, threading
+from tasks import Task, TaskManager, validate_time
+import threading, time
 
 task_manager = TaskManager([])
 
@@ -48,14 +48,26 @@ task_listbox = tk.Listbox(root, width=40)
 task_listbox.pack()
 
 
-def run_task_manager():
-    asyncio.run(task_manager.start_tracking_loop())
-
-
 def main():
-    thread = threading.Thread(target=run_task_manager)
-    thread.start()
+    stop_event = threading.Event()
+
+    def run_loop(interval=1):
+        print("Starting task tracking loop...")
+        while not stop_event.is_set():
+            print("Checking for pending tasks...")
+            task_manager.execute_pending_tasks()
+            time.sleep(interval)
+            
     
+    def on_close():
+        stop_event.set()
+        root.destroy()
+
+    
+    thread = threading.Thread(target=run_loop)
+    thread.start()
+
+    root.protocol("WM_DELETE_WINDOW", on_close)
     root.mainloop()
     
 if __name__ == "__main__":
