@@ -1,17 +1,12 @@
 from enum import Enum
 
-# Simple Task class definition
 class Task:
-	def __init__(self, name, trigger, members):
+	def __init__(self, name, time, executable):
 		self.name = name
-		self.trigger = trigger
-		self.members = members
+		self.time = time
+		self.executable = executable
+		self.completed = False
 
 	def __repr__(self):
-		return f"Task(name={self.name!r}, trigger={self.trigger!r}, members={self.members!r})"
-
-
-class Role(str, Enum):
-    ADMIN = "admin"
-    USER = "user"
+		return f"Task(name={self.name!r}, time={self.time!r}, executable={self.executable!r}, completed={self.completed!r})"
 
