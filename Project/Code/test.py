@@ -25,4 +25,4 @@ class TaskManager:
 		self.tasks = tasks
 
 	def add_task(self, task):
-		raise NameError
+		self.tasks.append(task)
