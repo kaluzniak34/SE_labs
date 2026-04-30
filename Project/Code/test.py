@@ -1,5 +1,6 @@
 from datetime import datetime
 import os
+import asyncio
 
 def validate_time(time):
 	return datetime.strptime(time, "%Y-%m-%d %H:%M:%S")
@@ -30,4 +31,12 @@ class TaskManager:
 		self.tasks.append(task)
 
 	def execute_pending_tasks(self):
-		raise NameError
+		for task in self.tasks:
+			if task.is_due() and not task.completed:
+				task.complete()
+
+	async def start_tracking_loop(self, interval=1):
+		while True:
+			print("Checking for pending tasks...")
+			self.execute_pending_tasks()
+			await asyncio.sleep(interval)

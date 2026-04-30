@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from test import Task, TaskManager, validate_time
+import asyncio, threading
 
 task_manager = TaskManager([])
 
@@ -47,4 +48,15 @@ task_listbox = tk.Listbox(root, width=40)
 task_listbox.pack()
 
 
-root.mainloop()
+def run_task_manager():
+    asyncio.run(task_manager.start_tracking_loop())
+
+
+def main():
+    thread = threading.Thread(target=run_task_manager)
+    thread.start()
+    
+    root.mainloop()
+    
+if __name__ == "__main__":
+    main()
