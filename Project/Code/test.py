@@ -1,4 +1,5 @@
 from enum import Enum
+from datetime import datetime
 
 class Task:
 	def __init__(self, name, time, executable):
@@ -11,4 +12,5 @@ class Task:
 		return f"Task(name={self.name!r}, time={self.time!r}, executable={self.executable!r}, completed={self.completed!r})"
 
 	def is_due(self):
-		raise NameError
+		now = datetime.now()
+		return now >= self.time
