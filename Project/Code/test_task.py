@@ -1,3 +1,4 @@
+import pickle
 import unittest
 from datetime import datetime, timedelta
 
@@ -73,6 +74,27 @@ class TestTaskManager(unittest.TestCase):
         manager2 = TaskManager()
         manager2.load_from_file(file)
         self.assertEqual(manager.tasks, manager2.tasks)
+
+    def test_wrong_filename(self):
+        manager = TaskManager([Task("name", "2024-06-01 10:00:00", "notepad")])
+        file = "\\"
+        self.assertRaises(OSError, manager.save_to_file, file)
+
+    def test_load_from_wrong_file(self):
+        manager = TaskManager()
+        file = "test_task.py"
+        self.assertRaises(pickle.UnpicklingError, manager.load_from_file, file)
+
+    def test_load_from_nonexistent_file(self):
+        manager = TaskManager()
+        file = "thisfiledoesnotexist.pkl"
+        self.assertRaises(FileNotFoundError, manager.load_from_file, file)
+
+    def test_load_from_directory(self):
+        manager = TaskManager()
+        file = "."
+        self.assertRaises(IsADirectoryError, manager.load_from_file, file)
+
 
 
 class TestTime(unittest.TestCase):
