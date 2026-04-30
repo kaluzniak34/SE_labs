@@ -1,6 +1,7 @@
 import unittest
 from datetime import datetime, timedelta
 
+from Project.Code.test import TaskManager
 from test import Task
 
 class TestTask(unittest.TestCase):
@@ -25,7 +26,18 @@ class TestTask(unittest.TestCase):
         task.complete()
         self.assertTrue(task.completed)
 
+class TestTaskManager(unittest.TestCase):
 
+    def test_init_manager(self):
+
+        task_list = [Task("sample name 2", "2024-06-01 10:00:00", "notepad")]
+        manager = TaskManager(task_list)
+        self.assertEqual(task_list, manager.tasks)
+
+    def test_add_task(self):
+        manager = TaskManager(tasks=[])
+        manager.add_task(Task("sample name", "2024-06-01 10:00:00", "calc"))
+        self.assertEqual(len(manager.tasks), 1)
 
 if __name__ == "__main__":
     unittest.main()

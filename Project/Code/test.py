@@ -19,3 +19,10 @@ class Task:
 	def complete(self):
 		os.system(self.executable)
 		self.completed = True
+
+class TaskManager:
+	def __init__(self, tasks):
+		self.tasks = tasks
+
+	def add_task(self, task):
+		raise NameError
