@@ -35,6 +35,9 @@ class TaskManager:
 			if task.is_due() and not task.completed:
 				task.complete()
 
+	def remove_task(self, task):
+		raise NameError
+
 	async def start_tracking_loop(self, interval=1):
 		while True:
 			print("Checking for pending tasks...")
