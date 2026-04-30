@@ -10,3 +10,5 @@ class Task:
 	def __repr__(self):
 		return f"Task(name={self.name!r}, time={self.time!r}, executable={self.executable!r}, completed={self.completed!r})"
 
+	def is_due(self):
+		raise NameError

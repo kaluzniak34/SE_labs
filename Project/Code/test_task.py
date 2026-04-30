@@ -1,4 +1,6 @@
 import unittest
+from datetime import datetime, timedelta
+
 from test import Task
 
 class TestTask(unittest.TestCase):
@@ -11,6 +13,14 @@ class TestTask(unittest.TestCase):
         self.assertEqual(task.time, time)
         self.assertEqual(task.executable, executable)
         self.assertFalse(task.completed)
+
+    def test_is_due(self):
+        past = datetime.now() - timedelta(seconds = 5)
+        task = Task("name", past, "notepad")
+        self.assertTrue(task.is_due())
+        self.assertFalse(task.completed)
+
+
 
 if __name__ == "__main__":
     unittest.main()
