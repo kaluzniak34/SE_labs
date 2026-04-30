@@ -1,4 +1,3 @@
-from enum import Enum
 from datetime import datetime
 import os
 
@@ -29,3 +28,6 @@ class TaskManager:
 
 	def add_task(self, task):
 		self.tasks.append(task)
+
+	def execute_pending_tasks(self):
+		raise NameError

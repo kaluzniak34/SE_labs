@@ -39,6 +39,19 @@ class TestTaskManager(unittest.TestCase):
         manager.add_task(Task("sample name", "2024-06-01 10:00:00", "calc"))
         self.assertEqual(len(manager.tasks), 1)
 
+    def test_task_execution(self):
+        past = datetime.now() - timedelta(seconds=5)
+        manager = TaskManager([Task("name", past, "notepad")])
+        manager.execute_pending_tasks()
+        self.assertTrue(manager.tasks[0].completed)
+
+    def test_future_task_is_not_executed(self):
+        past = datetime.now() + timedelta(seconds=5)
+        manager = TaskManager([Task("name", past, "notepad")])
+        manager.execute_pending_tasks()
+        self.assertFalse(manager.tasks[0].completed)
+
+
 class TestTime(unittest.TestCase):
     def test_invalid_format(self):
         time = "10:00.00 01/06/24"
