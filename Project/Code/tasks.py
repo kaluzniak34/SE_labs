@@ -31,9 +31,13 @@ class TaskManager:
 		self.tasks.append(task)
 
 	def execute_pending_tasks(self):
+		any_completed = False
 		for task in self.tasks:
 			if task.is_due() and not task.completed:
 				task.complete()
+				any_completed = True
+		
+		return any_completed
 
 	def remove_task(self, task):
 		self.tasks.remove(task)

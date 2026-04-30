@@ -21,8 +21,23 @@ def add_task():
         return
 
     task_manager.add_task(Task(title, time_validated, executable))
-    task_listbox.insert(tk.END, f"{title} at {time} - {executable}")
+    
+    add_all_tasks_to_listbox()
 
+def remove_task():
+    selected = task_listbox.curselection()
+    if not selected:
+        messagebox.showerror("No selection", "Please select a task to remove")
+        return
+
+    index = selected[0]
+    task_manager.remove_task(task_manager.tasks[index])
+    task_listbox.delete(index)
+
+def add_all_tasks_to_listbox():
+    task_listbox.delete(0, tk.END)
+    for task in task_manager.tasks:
+        task_listbox.insert(tk.END, f"{'[DONE]' if task.completed else '[PENDING]'} {task.name} at {task.time} - {task.executable}")
 
 root = tk.Tk()
 root.title("Workflow automator")
@@ -47,6 +62,7 @@ tk.Label(root, text="Scheduled tasks", font=("Arial", 20)).pack()
 task_listbox = tk.Listbox(root, width=40)
 task_listbox.pack()
 
+tk.Button(root, text="Remove Task", command=remove_task).pack()
 
 def main():
     stop_event = threading.Event()
@@ -55,7 +71,9 @@ def main():
         print("Starting task tracking loop...")
         while not stop_event.is_set():
             print("Checking for pending tasks...")
-            task_manager.execute_pending_tasks()
+            any_completed = task_manager.execute_pending_tasks()
+            if any_completed:
+                root.after(0, add_all_tasks_to_listbox)
             time.sleep(interval)
             
     
