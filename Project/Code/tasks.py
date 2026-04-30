@@ -47,4 +47,4 @@ class User:
 		self.password = password
 
 	def check_password(self, password):
-		raise NameError
+		return self.password == password
