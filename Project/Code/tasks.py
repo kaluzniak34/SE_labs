@@ -24,7 +24,7 @@ class Task:
 		self.completed = True
 
 class TaskManager:
-	def __init__(self, tasks):
+	def __init__(self, tasks=None):
 		self.tasks = tasks
 
 	def add_task(self, task):
@@ -41,6 +41,12 @@ class TaskManager:
 
 	def remove_task(self, task):
 		self.tasks.remove(task)
+
+	def save_to_file(self, path):
+		raise NameError
+
+	def load_from_file(self, path):
+		raise NameError
 
 class User:
 	def __init__(self, password):

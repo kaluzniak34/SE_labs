@@ -42,7 +42,7 @@ class TestTaskManager(unittest.TestCase):
 
     def test_task_execution(self):
         past = datetime.now() - timedelta(seconds=5)
-        manager = TaskManager([Task("name", past, "notepad")])
+        manager = TaskManager([Task("name", past, "")])
         manager.execute_pending_tasks()
         self.assertTrue(manager.tasks[0].completed)
 
@@ -57,6 +57,22 @@ class TestTaskManager(unittest.TestCase):
         manager = TaskManager(task_list)
         manager.remove_task(manager.tasks[0])
         self.assertEqual(task_list, manager.tasks)
+
+    def test_save_load_empty_list(self):
+        manager = TaskManager()
+        file = "tasks.pkl"
+        manager.save_to_file(file)
+        manager2 = TaskManager()
+        manager2.load_from_file(file)
+        self.assertEqual(manager.tasks, manager2.tasks)
+
+    def test_save_load_task_list(self):
+        manager = TaskManager([Task("name", "2024-06-01 10:00:00", "notepad")])
+        file = "tasks2.pkl"
+        manager.save_to_file(file)
+        manager2 = TaskManager()
+        manager2.load_from_file(file)
+        self.assertEqual(manager.tasks, manager2.tasks)
 
 
 class TestTime(unittest.TestCase):
